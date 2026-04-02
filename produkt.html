@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bluza Kangurka AO — Zielona — Akademia Okocimskiego</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --g900: #0d2212; --g800: #122b18; --g700: #183620; --g600: #1e562f;
+      --g500: #1e5630; --g400: #2d7a47; --g300: #3da05f; --g200: #7ec89a;
+      --g100: #c8ecd6; --g50:  #eaf7ef;
+      --gold: #C9A84C; --gold-light: #f0d080;
+      --bg: #f8faf8; --surface: #fff; --border: rgba(30,86,48,0.12);
+      --text: #0d2212; --muted: rgba(13,34,18,0.45);
+      --r: 10px; --transition: 0.2s ease;
+    }
+    body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--text); }
+
+    /* ── HEADER ── */
+    header { background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    .header-inner { max-width: 1360px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; gap: 40px; height: 72px; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0; }
+    .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .logo-text span:first-child { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--g900); letter-spacing: 0.04em; }
+    .logo-text span:last-child { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; }
+    nav { display: flex; align-items: center; gap: 4px; flex: 1; }
+    nav a { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(20,45,25,0.55); text-decoration: none; padding: 8px 14px; border-radius: var(--r); transition: color var(--transition), background var(--transition); }
+    nav a:hover { color: var(--g500); background: rgba(30,86,48,0.07); }
+    .header-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+    .icon-btn { background: none; border: none; cursor: pointer; padding: 8px; border-radius: 8px; color: var(--g700); transition: background var(--transition); position: relative; }
+    .icon-btn:hover { background: var(--g50); }
+    .cart-count { position: absolute; top: 4px; right: 4px; background: var(--gold); color: var(--g900); font-size: 10px; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; display: none; }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb { max-width: 1360px; margin: 0 auto; padding: 16px 32px; display: flex; gap: 8px; align-items: center; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; color: var(--muted); }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--g500); }
+    .breadcrumb span { color: var(--g500); font-weight: 600; }
+
+    /* ── PRODUCT LAYOUT ── */
+    .product-page { max-width: 1360px; margin: 0 auto; padding: 0 32px 80px; display: grid; grid-template-columns: 1fr 480px; gap: 60px; align-items: start; }
+
+    /* ── GALLERY ── */
+    .gallery { display: grid; grid-template-columns: 80px 1fr; gap: 12px; position: sticky; top: 90px; }
+    .thumbs { display: flex; flex-direction: column; gap: 10px; }
+    .thumb { width: 80px; height: 80px; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s; position: relative; background: #f0f4f0; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .thumb.active { border-color: var(--g500); }
+    .thumb.video-thumb { background: var(--g700); display: flex; align-items: center; justify-content: center; }
+    .thumb.video-thumb svg { color: #fff; width: 28px; height: 28px; }
+    .main-display { aspect-ratio: 3/4; border-radius: 14px; overflow: hidden; background: #f0f4f0; position: relative; }
+    .main-display img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .main-display video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .main-display .media-item { position: absolute; inset: 0; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .main-display .media-item.active { opacity: 1; pointer-events: auto; }
+
+    /* ── PRODUCT INFO ── */
+    .product-info { padding-top: 8px; }
+    .product-badge-row { display: flex; gap: 8px; margin-bottom: 12px; }
+    .badge { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; }
+    .badge-new { background: var(--g300); color: #fff; }
+    .product-category { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; color: var(--g400); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+    .product-title { font-family: 'Bebas Neue', sans-serif; font-size: 38px; letter-spacing: 0.03em; color: var(--g900); line-height: 1.1; margin-bottom: 12px; }
+    .product-stars { display: flex; align-items: center; gap: 6px; margin-bottom: 20px; }
+    .star { color: var(--gold); font-size: 16px; }
+    .product-price-big { font-family: 'Barlow Condensed', sans-serif; font-size: 32px; font-weight: 700; color: var(--g900); margin-bottom: 24px; }
+    .product-desc { font-size: 15px; line-height: 1.6; color: rgba(13,34,18,0.7); margin-bottom: 28px; }
+    .product-desc ul { padding-left: 20px; margin-top: 8px; }
+    .product-desc li { margin-bottom: 4px; }
+
+    /* Size picker */
+    .label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .size-label { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--g700); }
+    .size-guide { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; color: var(--g400); text-decoration: underline; cursor: pointer; }
+    .sizes-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+    .size-btn { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600; padding: 10px 20px; border: 1.5px solid var(--border); border-radius: 8px; background: #fff; cursor: pointer; transition: all 0.15s; color: var(--g700); }
+    .size-btn:hover { border-color: var(--g500); color: var(--g500); }
+    .size-btn.selected { border-color: var(--g500); background: var(--g500); color: #fff; }
+    .size-btn.out { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
+
+    /* CTA */
+    .cta-row { display: flex; gap: 12px; margin-bottom: 20px; }
+    .btn-cart { flex: 1; padding: 16px 24px; background: var(--g500); color: #fff; border: none; border-radius: var(--r); font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+    .btn-cart:hover { background: var(--g400); }
+    .btn-wish { width: 52px; height: 52px; border: 1.5px solid var(--border); border-radius: var(--r); background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s; }
+    .btn-wish:hover { border-color: var(--g500); }
+
+    /* Trust */
+    .trust-mini { display: flex; flex-direction: column; gap: 8px; padding: 16px; background: var(--g50); border-radius: var(--r); }
+    .trust-mini-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--g700); }
+    .trust-mini-item svg { color: var(--g400); flex-shrink: 0; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .product-page { grid-template-columns: 1fr; gap: 32px; padding: 0 16px 60px; }
+      .gallery { grid-template-columns: 64px 1fr; gap: 8px; position: static; }
+      .thumb { width: 64px; height: 64px; }
+    }
+
+    /* ── NEWSLETTER ── */
+    .newsletter {
+      margin: 0 0 80px;
+      background: #f4f7f5;
+      border: 1px solid rgba(30,86,48,0.12);
+      border-radius: 20px;
+      padding: 64px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .newsletter::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      border: 1px solid rgba(201,168,76,0.08);
+      border-radius: 50%;
+    }
+    .newsletter::before {
+      content: '';
+      position: absolute;
+      top: -20px; right: -20px;
+      width: 200px; height: 200px;
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 50%;
+    }
+    .nl-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px;
+      color: var(--g900);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+    .nl-title span { color: var(--g400); }
+    .nl-desc { color: rgba(20,45,25,0.6); font-size: 16px; }
+    .nl-form { display: flex; gap: 12px; }
+    .nl-input {
+      flex: 1;
+      background: #ffffff;
+      border: 1px solid rgba(30,86,48,0.2);
+      border-radius: var(--r);
+      padding: 14px 18px;
+      color: var(--g900);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.28s cubic-bezier(.4,0,.2,1);
+    }
+    .nl-input::placeholder { color: rgba(20,45,25,0.4); }
+    .nl-input:focus { border-color: var(--g400); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #f4f7f5;
+      border-top: 1px solid rgba(30,86,48,0.12);
+    }
+    .footer-main {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 64px 32px 48px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+    }
+    .footer-brand p {
+      color: rgba(20,45,25,0.6);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-top: 16px;
+      max-width: 280px;
+    }
+    .footer-socials { display: flex; gap: 10px; margin-top: 24px; }
+    .social-btn {
+      width: 36px; height: 36px;
+      background: #ffffff;
+      border: 1px solid rgba(30,86,48,0.15);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: rgba(20,45,25,0.55);
+      cursor: pointer;
+      transition: background 0.28s, color 0.28s, border-color 0.28s;
+      text-decoration: none;
+    }
+    .social-btn:hover { background: var(--gold); color: var(--g900); border-color: var(--gold); }
+    .social-btn svg { width: 16px; height: 16px; }
+    .footer-col h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--g500);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col a {
+      color: rgba(20,45,25,0.55);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.28s;
+    }
+    .footer-col a:hover { color: var(--g900); }
+    .footer-bottom {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 20px 32px;
+      border-top: 1px solid rgba(30,86,48,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .footer-bottom p { font-size: 13px; color: rgba(20,45,25,0.5); }
+    .footer-payments { display: flex; gap: 8px; align-items: center; }
+    .payment-badge {
+      background: #ffffff;
+      border: 1px solid rgba(30,86,48,0.15);
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: rgba(20,45,25,0.55);
+    }
+    @media (max-width: 900px) {
+      .newsletter { grid-template-columns: 1fr; gap: 32px; padding: 40px 28px; }
+      .footer-main { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .footer-main { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img src="00%20-%20Assets/Logo.png" alt="Logo Akademii Okocimskiego" style="height:44px;width:auto;display:block;">
+    </a>
+    <nav>
+      <a href="kategoria.html?kat=koszulki">Koszulki</a>
+      <a href="kategoria.html?kat=bluzy" class="active">Bluzy</a>
+      <a href="kategoria.html?kat=spodenki">Spodenki</a>
+      <a href="kategoria.html?kat=czapki">Czapki</a>
+      <a href="kategoria.html?kat=torby">Torby</a>
+      <a href="kategoria.html?kat=gadgety">Gadżety</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="cart-icon-btn" aria-label="Koszyk">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="breadcrumb">
+  <a href="index.html">Sklep</a>
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+  <a href="kategoria.html?kat=bluzy">Bluzy</a>
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+  <span>Bluza Kangurka AO — Zielona</span>
+</div>
+
+<div class="product-page">
+
+  <!-- GALLERY -->
+  <div class="gallery">
+    <div class="thumbs">
+      <div class="thumb active" data-index="0">
+        <img src="01%20-%20Produkty/01%20-%20Bluza/Bluza_01.png" alt="Zdjęcie 1">
+      </div>
+      <div class="thumb" data-index="1">
+        <img src="01%20-%20Produkty/01%20-%20Bluza/Bluza_02.png" alt="Zdjęcie 2">
+      </div>
+      <div class="thumb" data-index="2">
+        <img src="01%20-%20Produkty/01%20-%20Bluza/Bluza_03.png" alt="Zdjęcie 3">
+      </div>
+      <div class="thumb video-thumb" data-index="3">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </div>
+    </div>
+    <div class="main-display">
+      <div class="media-item active" data-index="0">
+        <img src="01%20-%20Produkty/01%20-%20Bluza/Bluza_01.png" alt="Bluza Kangurka AO — zdjęcie 1">
+      </div>
+      <div class="media-item" data-index="1">
+        <img src="01%20-%20Produkty/01%20-%20Bluza/Bluza_02.png" alt="Bluza Kangurka AO — zdjęcie 2">
+      </div>
+      <div class="media-item" data-index="2">
+        <img src="01%20-%20Produkty/01%20-%20Bluza/Bluza_03.png" alt="Bluza Kangurka AO — zdjęcie 3">
+      </div>
+      <div class="media-item" data-index="3">
+        <video id="product-video" muted loop playsinline controls style="width:100%;height:100%;object-fit:cover;">
+          <source src="01%20-%20Produkty/01%20-%20Bluza/Bluza_04%20%2B%20hover.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT INFO -->
+  <div class="product-info">
+    <div class="product-badge-row">
+      <span class="badge badge-new">Nowość</span>
+    </div>
+    <div class="product-category">Bluzy Treningowe</div>
+    <h1 class="product-title">Bluza Kangurka AO — Zielona</h1>
+    <div class="product-stars">
+      <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      <span style="font-size:13px;color:var(--muted);margin-left:4px;">5.0 (24 opinie)</span>
+    </div>
+    <div class="product-price-big">229 zł</div>
+    <div class="product-desc">
+      Oficjalna bluza treningowa Akademii Piłkarskiej Okocimski Brzesko. Wykonana z wysokiej jakości bawełny ze wzornictwem AP Okocimski.
+      <ul>
+        <li>Skład: 80% bawełna, 20% poliester</li>
+        <li>Kangurka z przednią kieszenią</li>
+        <li>Haft z logo Akademii na piersi</li>
+        <li>Napis „AP OKOCIMSKI BRZESKO" na plecach</li>
+        <li>Dostępna w rozmiarach XS–XL</li>
+      </ul>
+    </div>
+
+    <div class="label-row">
+      <span class="size-label">Rozmiar</span>
+      <span class="size-guide">Tabela rozmiarów</span>
+    </div>
+    <div class="sizes-grid">
+      <button class="size-btn" data-size="XS">XS</button>
+      <button class="size-btn" data-size="S">S</button>
+      <button class="size-btn" data-size="M">M</button>
+      <button class="size-btn" data-size="L">L</button>
+      <button class="size-btn" data-size="XL">XL</button>
+    </div>
+
+    <div class="cta-row">
+      <button class="btn-cart" id="add-to-cart-btn">Dodaj do koszyka</button>
+      <button class="btn-wish" aria-label="Dodaj do ulubionych">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      </button>
+    </div>
+
+    <div class="trust-mini">
+      <div class="trust-mini-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Darmowa dostawa od 199 zł
+      </div>
+      <div class="trust-mini-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+        30 dni na zwrot
+      </div>
+      <div class="trust-mini-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Oryginalne produkty Akademii
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div style="max-width:1200px;margin:80px auto 0;padding:0 32px;">
+<div class="newsletter">
+  <div>
+    <h2 class="nl-title">Bądź<br><span>Pierwszy</span></h2>
+    <p class="nl-desc" style="margin-top:12px;">Zapisz się do newslettera i otrzymuj informacje o nowościach, promocjach i wydarzeniach Akademii Okocimskiego. Dla nowych subskrybentów: <strong style="color:var(--gold)">-10% na pierwsze zamówienie.</strong></p>
+  </div>
+  <div>
+    <p style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Dołącz do społeczności</p>
+    <div class="nl-form" style="margin-bottom:12px;">
+      <input class="nl-input" type="email" placeholder="Twój adres e-mail" />
+      <button class="btn-primary" style="background:var(--g500);color:#fff;border:none;border-radius:var(--r);padding:14px 24px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;white-space:nowrap;">Zapisz się</button>
+    </div>
+    <p style="font-size:12px;color:var(--muted);">Bez spamu. Możesz się wypisać w dowolnym momencie.</p>
+  </div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <a href="index.html" style="text-decoration:none;">
+        <img src="00%20-%20Assets/Logo.png" alt="Logo Akademii Okocimskiego" style="height:44px;width:auto;display:block;">
+      </a>
+      <p>Oficjalny sklep Akademii Piłkarskiej Okocimskiego. Odzież, gadżety i akcesoria najwyższej jakości dla każdego kibica i zawodnika.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-btn" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Sklep</h4>
+      <ul>
+        <li><a href="kategoria.html?kat=koszulki">Koszulki & Stroje</a></li>
+        <li><a href="kategoria.html?kat=bluzy">Bluzy & Kurtki</a></li>
+        <li><a href="kategoria.html?kat=spodenki">Spodenki & Spodnie</a></li>
+        <li><a href="kategoria.html?kat=czapki">Czapki & Akcesoria</a></li>
+        <li><a href="kategoria.html?kat=torby">Torby & Sprzęt</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Akademia</h4>
+      <ul>
+        <li><a href="#">O Akademii</a></li>
+        <li><a href="#">Sekcje Wiekowe</a></li>
+        <li><a href="#">Terminarz</a></li>
+        <li><a href="#">Wyniki</a></li>
+        <li><a href="#">Kadra trenerska</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Pomoc</h4>
+      <ul>
+        <li><a href="#">Rozmiarówka</a></li>
+        <li><a href="#">Wysyłka & Zwroty</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Kontakt</a></li>
+        <li><a href="#">Regulamin</a></li>
+        <li><a href="#">Polityka prywatności</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Akademia Okocimskiego — Wszelkie prawa zastrzeżone</p>
+    <div class="footer-payments">
+      <span class="payment-badge">VISA</span>
+      <span class="payment-badge">Mastercard</span>
+      <span class="payment-badge">BLIK</span>
+      <span class="payment-badge">Przelewy24</span>
+    </div>
+  </div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cart-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:200;"></div>
+<div id="cart-drawer" style="display:none;position:fixed;right:0;top:0;bottom:0;width:400px;background:#fff;z-index:201;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,0.12);padding:24px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.04em;">Koszyk</h3>
+    <button id="cart-close" style="background:none;border:none;cursor:pointer;font-size:24px;color:var(--muted);">✕</button>
+  </div>
+  <div id="cart-items" style="flex:1;overflow-y:auto;"></div>
+  <div id="cart-footer" style="display:none;border-top:1px solid var(--border);padding-top:16px;margin-top:16px;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:16px;font-weight:600;">
+      <span>Razem</span><span id="cart-total">0 zł</span>
+    </div>
+    <a href="checkout.html" style="display:block;text-align:center;padding:14px;background:var(--g500);color:#fff;border-radius:var(--r);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;">Przejdź do kasy</a>
+  </div>
+</div>
+
+<script>
+  /* ── GALLERY ── */
+  const thumbs = document.querySelectorAll('.thumb');
+  const mediaItems = document.querySelectorAll('.media-item');
+  const productVideo = document.getElementById('product-video');
+
+  thumbs.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      const idx = parseInt(thumb.dataset.index);
+      thumbs.forEach(t => t.classList.remove('active'));
+      mediaItems.forEach(m => m.classList.remove('active'));
+      thumb.classList.add('active');
+      mediaItems[idx].classList.add('active');
+      if (idx === 3) { productVideo.play(); }
+      else { productVideo.pause(); productVideo.currentTime = 0; }
+    });
+  });
+
+  /* ── SIZE PICKER ── */
+  let selectedSize = null;
+  document.querySelectorAll('.size-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedSize = btn.dataset.size;
+    });
+  });
+
+  /* ── CART ── */
+  const PRODUCT = {
+    id: 3, name: 'Bluza Kangurka AO — Zielona', category: 'Bluzy Treningowe',
+    price: 229, image: '01%20-%20Produkty/01%20-%20Bluza/Bluza_01.png'
+  };
+
+  let cart = JSON.parse(localStorage.getItem('ao_cart')) || [];
+
+  function saveCart() { localStorage.setItem('ao_cart', JSON.stringify(cart)); }
+  function updateCartCount() {
+    const total = cart.reduce((s, i) => s + i.qty, 0);
+    const el = document.getElementById('cart-count');
+    el.textContent = total;
+    el.style.display = total > 0 ? 'flex' : 'none';
+  }
+
+  function renderCart() {
+    const itemsEl = document.getElementById('cart-items');
+    const footer = document.getElementById('cart-footer');
+    if (cart.length === 0) {
+      itemsEl.innerHTML = '<p style="color:var(--muted);text-align:center;padding:32px 0;">Koszyk jest pusty</p>';
+      footer.style.display = 'none';
+      return;
+    }
+    itemsEl.innerHTML = cart.map(item => `
+      <div style="display:flex;gap:12px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border);">
+        <img src="${item.image}" style="width:64px;height:64px;object-fit:cover;border-radius:8px;" alt="">
+        <div style="flex:1;">
+          <div style="font-size:13px;color:var(--muted);">${item.category}</div>
+          <div style="font-weight:600;font-size:14px;">${item.name}</div>
+          ${item.size ? `<div style="font-size:13px;">Rozmiar: <strong>${item.size}</strong></div>` : ''}
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
+            <span style="font-weight:700;">${item.price * item.qty} zł</span>
+            <button onclick="removeItem('${item.key}')" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:18px;">✕</button>
+          </div>
+        </div>
+      </div>`).join('');
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    document.getElementById('cart-total').textContent = total + ' zł';
+    footer.style.display = 'block';
+  }
+
+  function removeItem(key) {
+    cart = cart.filter(i => i.key !== key);
+    saveCart(); renderCart(); updateCartCount();
+  }
+
+  function openDrawer() {
+    document.getElementById('cart-drawer').style.display = 'flex';
+    document.getElementById('cart-overlay').style.display = 'block';
+    renderCart();
+  }
+
+  document.getElementById('cart-close').addEventListener('click', () => {
+    document.getElementById('cart-drawer').style.display = 'none';
+    document.getElementById('cart-overlay').style.display = 'none';
+  });
+  document.getElementById('cart-overlay').addEventListener('click', () => {
+    document.getElementById('cart-drawer').style.display = 'none';
+    document.getElementById('cart-overlay').style.display = 'none';
+  });
+  document.getElementById('cart-icon-btn').addEventListener('click', openDrawer);
+
+  document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+    if (!selectedSize) { alert('Wybierz rozmiar'); return; }
+    const key = `${PRODUCT.id}_${selectedSize}`;
+    const existing = cart.find(i => i.key === key);
+    if (existing) { existing.qty++; }
+    else { cart.push({ key, ...PRODUCT, size: selectedSize, qty: 1 }); }
+    saveCart(); updateCartCount(); openDrawer();
+  });
+
+  updateCartCount();
+</script>
+</body>
+</html>

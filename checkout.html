@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — Akademia Okocimskiego</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --g900: #0D3B1F;
+      --g800: #f4f7f5;
+      --g700: #e8ede9;
+      --g600: #174023;
+      --g500: #1E5630;
+      --g400: #286B3E;
+      --g300: #3B8C58;
+      --gold: #C9A84C;
+      --gold2: #b8922e;
+      --gold3: #F0D68A;
+      --white: #FFFFFF;
+      --muted: rgba(20,45,25,0.55);
+      --border: rgba(30,86,48,0.15);
+      --r: 6px;
+      --transition: 0.28s cubic-bezier(.4,0,.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #f4f7f5;
+      color: #1a2e1e;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid rgba(30,86,48,0.12);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 32px; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none;
+    }
+    .logo-badge {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--g500) 0%, var(--g400) 100%);
+      border: 2px solid var(--gold); border-radius: 50%;
+      display: grid; place-items: center;
+    }
+    .logo-badge svg { width: 20px; height: 20px; }
+    .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .logo-text span:first-child {
+      font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+      color: var(--g900); letter-spacing: 0.04em;
+    }
+    .logo-text span:last-child {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 11px;
+      font-weight: 600; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase;
+    }
+    .header-back {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: rgba(20,45,25,0.55); text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+      transition: color var(--transition);
+    }
+    .header-back:hover { color: var(--g500); }
+    .header-back svg { width: 16px; height: 16px; }
+
+    /* ── STEPS BAR ── */
+    .steps-bar {
+      background: #fff; border-bottom: 1px solid rgba(30,86,48,0.1);
+      padding: 0 32px;
+    }
+    .steps-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; gap: 0; align-items: stretch;
+    }
+    .step-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 24px 14px 0;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 13px;
+      font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(20,45,25,0.35);
+    }
+    .step-item.active { color: var(--g500); }
+    .step-item.done { color: var(--g400); }
+    .step-num {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: rgba(30,86,48,0.1); color: rgba(20,45,25,0.4);
+      display: grid; place-items: center; font-size: 12px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .step-item.active .step-num { background: var(--g500); color: #fff; }
+    .step-item.done .step-num { background: var(--g400); color: #fff; }
+    .step-sep {
+      width: 32px; height: 1px; background: rgba(30,86,48,0.15);
+      align-self: center; flex-shrink: 0;
+    }
+
+    /* ── LAYOUT ── */
+    .checkout-layout {
+      max-width: 1200px; margin: 0 auto;
+      padding: 40px 32px 80px;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ── SECTION CARD ── */
+    .card {
+      background: #ffffff; border-radius: 12px;
+      border: 1px solid rgba(30,86,48,0.1);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+    .card:last-child { margin-bottom: 0; }
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+      letter-spacing: 0.04em; color: var(--g900);
+      margin-bottom: 22px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .card-title-num {
+      width: 28px; height: 28px; background: var(--g500); color: #fff;
+      border-radius: 50%; display: grid; place-items: center;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700;
+    }
+
+    /* ── FORM ── */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-row.full { grid-template-columns: 1fr; }
+    .form-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group:last-child { margin-bottom: 0; }
+    label {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: rgba(20,45,25,0.6);
+    }
+    label span.req { color: #e05252; margin-left: 2px; }
+    input, select {
+      width: 100%; padding: 12px 14px;
+      border: 1.5px solid rgba(30,86,48,0.18); border-radius: var(--r);
+      font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--g900);
+      background: #fff; outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      appearance: none;
+    }
+    input:focus, select:focus {
+      border-color: var(--g500);
+      box-shadow: 0 0 0 3px rgba(30,86,48,0.08);
+    }
+    input.error, select.error { border-color: #e05252; }
+    .error-msg {
+      font-size: 12px; color: #e05252; display: none;
+    }
+    input.error + .error-msg,
+    select.error + .error-msg { display: block; }
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '';
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid rgba(20,45,25,0.4);
+      pointer-events: none;
+    }
+    .select-wrap select { padding-right: 36px; cursor: pointer; }
+
+    /* ── DELIVERY OPTIONS ── */
+    .delivery-options { display: flex; flex-direction: column; gap: 10px; }
+    .delivery-opt {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px; border: 1.5px solid rgba(30,86,48,0.15);
+      border-radius: 10px; cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .delivery-opt:hover { border-color: rgba(30,86,48,0.35); }
+    .delivery-opt.selected { border-color: var(--g500); background: rgba(30,86,48,0.04); }
+    .delivery-opt input[type="radio"] { display: none; }
+    .radio-dot {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid rgba(30,86,48,0.25); flex-shrink: 0;
+      display: grid; place-items: center;
+      transition: border-color var(--transition);
+    }
+    .delivery-opt.selected .radio-dot { border-color: var(--g500); }
+    .radio-dot::after {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--g500); opacity: 0; transition: opacity var(--transition);
+    }
+    .delivery-opt.selected .radio-dot::after { opacity: 1; }
+    .delivery-opt-icon { font-size: 20px; flex-shrink: 0; }
+    .delivery-opt-info { flex: 1; }
+    .delivery-opt-name {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 15px;
+      font-weight: 700; color: var(--g900); letter-spacing: 0.02em;
+    }
+    .delivery-opt-desc { font-size: 12px; color: var(--muted); }
+    .delivery-opt-price {
+      font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--g500);
+      flex-shrink: 0;
+    }
+    .delivery-opt-price.free { color: var(--g300); font-size: 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; }
+
+    /* ── PAYMENT OPTIONS ── */
+    .payment-options {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    }
+    .payment-opt {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 16px 10px; border: 1.5px solid rgba(30,86,48,0.15);
+      border-radius: 10px; cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+      text-align: center;
+    }
+    .payment-opt:hover { border-color: rgba(30,86,48,0.35); }
+    .payment-opt.selected { border-color: var(--g500); background: rgba(30,86,48,0.04); }
+    .payment-opt input[type="radio"] { display: none; }
+    .payment-opt-icon { font-size: 26px; }
+    .payment-opt-name {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 13px;
+      font-weight: 700; letter-spacing: 0.04em; color: var(--g900);
+    }
+
+    /* ── ORDER SUMMARY ── */
+    .summary-card {
+      background: #fff; border-radius: 12px;
+      border: 1px solid rgba(30,86,48,0.1);
+      padding: 24px; position: sticky; top: 100px;
+    }
+    .summary-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+      letter-spacing: 0.04em; color: var(--g900); margin-bottom: 20px;
+    }
+    .summary-items { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
+    .summary-item { display: flex; gap: 12px; align-items: flex-start; }
+    .summary-item-img {
+      width: 52px; height: 52px; border-radius: 8px; background: #e8ede9;
+      overflow: hidden; flex-shrink: 0; position: relative;
+    }
+    .summary-item-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .summary-item-qty {
+      position: absolute; top: -6px; right: -6px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--g500); color: #fff;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700;
+      display: grid; place-items: center;
+    }
+    .summary-item-info { flex: 1; min-width: 0; }
+    .summary-item-name {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 14px;
+      font-weight: 600; color: var(--g900); line-height: 1.2; margin-bottom: 2px;
+    }
+    .summary-item-size { font-size: 11px; color: var(--muted); }
+    .summary-item-price {
+      font-family: 'Bebas Neue', sans-serif; font-size: 17px; color: var(--g500);
+      flex-shrink: 0;
+    }
+    .summary-divider { height: 1px; background: rgba(30,86,48,0.1); margin: 16px 0; }
+    .summary-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 8px;
+    }
+    .summary-row-label { font-size: 14px; color: var(--muted); }
+    .summary-row-val {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 15px;
+      font-weight: 700; color: var(--g900);
+    }
+    .summary-row-val.free { color: var(--g300); }
+    .summary-total {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-top: 12px; padding-top: 16px;
+      border-top: 2px solid rgba(30,86,48,0.12);
+    }
+    .summary-total-label {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 14px;
+      font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--g900);
+    }
+    .summary-total-val {
+      font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--g900);
+    }
+    .promo-wrap { margin: 16px 0; }
+    .promo-row { display: flex; gap: 8px; }
+    .promo-input {
+      flex: 1; padding: 10px 14px; border: 1.5px solid rgba(30,86,48,0.18);
+      border-radius: var(--r); font-family: 'DM Sans', sans-serif; font-size: 14px;
+      color: var(--g900); outline: none;
+      transition: border-color var(--transition);
+    }
+    .promo-input:focus { border-color: var(--g500); }
+    .promo-btn {
+      padding: 10px 16px; background: transparent;
+      border: 1.5px solid rgba(30,86,48,0.2); border-radius: var(--r);
+      font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--g500);
+      cursor: pointer; transition: all var(--transition);
+    }
+    .promo-btn:hover { background: rgba(30,86,48,0.07); border-color: var(--g500); }
+    .promo-success {
+      display: none; font-size: 12px; color: var(--g300); font-weight: 600;
+      margin-top: 6px;
+    }
+
+    /* ── SUBMIT BTN ── */
+    .btn-submit {
+      width: 100%; padding: 16px; margin-top: 20px;
+      background: var(--gold); color: var(--g900);
+      border: none; border-radius: var(--r);
+      font-family: 'Barlow Condensed', sans-serif; font-size: 16px;
+      font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      gap: 10px; transition: background var(--transition), transform var(--transition);
+    }
+    .btn-submit:hover { background: var(--gold2); transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-submit svg { width: 18px; height: 18px; }
+    .secure-note {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      font-size: 12px; color: var(--muted); margin-top: 10px;
+    }
+    .secure-note svg { width: 13px; height: 13px; color: var(--g400); }
+
+    /* ── SUCCESS STATE ── */
+    .success-screen {
+      display: none;
+      max-width: 560px; margin: 80px auto; padding: 0 32px; text-align: center;
+    }
+    .success-screen.show { display: block; }
+    .success-icon {
+      width: 80px; height: 80px; background: linear-gradient(135deg, var(--g500), var(--g400));
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .success-icon svg { width: 40px; height: 40px; color: #fff; }
+    .success-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: 40px; letter-spacing: 0.04em;
+      color: var(--g900); margin-bottom: 12px;
+    }
+    .success-title span { color: var(--gold); }
+    .success-desc { color: var(--muted); font-size: 16px; line-height: 1.7; margin-bottom: 32px; }
+    .success-order {
+      background: #fff; border: 1px solid rgba(30,86,48,0.12); border-radius: 12px;
+      padding: 20px 24px; margin-bottom: 28px; text-align: left;
+    }
+    .success-order-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0; border-bottom: 1px solid rgba(30,86,48,0.08);
+    }
+    .success-order-row:last-child { border-bottom: none; }
+    .success-order-label { font-size: 13px; color: var(--muted); }
+    .success-order-val {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 15px;
+      font-weight: 700; color: var(--g900);
+    }
+    .btn-back-shop {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 32px; background: var(--g500); color: #fff;
+      text-decoration: none; border-radius: var(--r);
+      font-family: 'Barlow Condensed', sans-serif; font-size: 15px;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .btn-back-shop:hover { background: var(--g400); transform: translateY(-1px); }
+
+    /* ── EMPTY CART STATE ── */
+    .empty-cart-screen {
+      display: none; max-width: 480px; margin: 80px auto;
+      padding: 0 32px; text-align: center;
+    }
+    .empty-cart-screen.show { display: block; }
+    .empty-cart-screen svg { opacity: 0.2; margin-bottom: 20px; }
+    .empty-cart-screen h2 {
+      font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--g900);
+      margin-bottom: 8px;
+    }
+    .empty-cart-screen p { color: var(--muted); margin-bottom: 28px; }
+
+    /* ── LOADING SPINNER ── */
+    .spinner {
+      display: none; width: 20px; height: 20px;
+      border: 2px solid rgba(13,59,31,0.2);
+      border-top-color: var(--g900); border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 900px) {
+      .checkout-layout { grid-template-columns: 1fr; }
+      .summary-card { position: static; order: -1; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-row.cols-3 { grid-template-columns: 1fr 1fr; }
+      .payment-options { grid-template-columns: 1fr 1fr; }
+      .checkout-layout { padding: 24px 20px 60px; }
+    }
+    @media (max-width: 560px) {
+      .header-inner { padding: 0 20px; }
+      .steps-bar { padding: 0 20px; }
+      .step-item span.step-label { display: none; }
+    }
+
+    /* ── NEWSLETTER ── */
+    .newsletter {
+      margin: 0 0 80px;
+      background: #f4f7f5;
+      border: 1px solid rgba(30,86,48,0.12);
+      border-radius: 20px;
+      padding: 64px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .newsletter::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      border: 1px solid rgba(201,168,76,0.08);
+      border-radius: 50%;
+    }
+    .newsletter::before {
+      content: '';
+      position: absolute;
+      top: -20px; right: -20px;
+      width: 200px; height: 200px;
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 50%;
+    }
+    .nl-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px;
+      color: var(--g900);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+    .nl-title span { color: var(--g400); }
+    .nl-desc { color: rgba(20,45,25,0.6); font-size: 16px; }
+    .nl-form { display: flex; gap: 12px; }
+    .nl-input {
+      flex: 1;
+      background: #ffffff;
+      border: 1px solid rgba(30,86,48,0.2);
+      border-radius: var(--r);
+      padding: 14px 18px;
+      color: var(--g900);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .nl-input::placeholder { color: rgba(20,45,25,0.4); }
+    .nl-input:focus { border-color: var(--g400); }
+    .btn-primary {
+      background: var(--g500);
+      color: #fff;
+      border: none;
+      border-radius: var(--r);
+      padding: 14px 24px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background var(--transition);
+      white-space: nowrap;
+    }
+    .btn-primary:hover { background: var(--g400); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #f4f7f5;
+      border-top: 1px solid rgba(30,86,48,0.12);
+    }
+    .footer-main {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 64px 32px 48px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+    }
+    .footer-brand p {
+      color: rgba(20,45,25,0.6);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-top: 16px;
+      max-width: 280px;
+    }
+    .footer-socials { display: flex; gap: 10px; margin-top: 24px; }
+    .social-btn {
+      width: 36px; height: 36px;
+      background: #ffffff;
+      border: 1px solid rgba(30,86,48,0.15);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: rgba(20,45,25,0.55);
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition), border-color var(--transition);
+      text-decoration: none;
+    }
+    .social-btn:hover { background: var(--gold); color: var(--g900); border-color: var(--gold); }
+    .social-btn svg { width: 16px; height: 16px; }
+    .footer-col h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--g500);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col a {
+      color: rgba(20,45,25,0.55);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color var(--transition);
+    }
+    .footer-col a:hover { color: var(--g900); }
+    .footer-bottom {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 20px 32px;
+      border-top: 1px solid rgba(30,86,48,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .footer-bottom p { font-size: 13px; color: rgba(20,45,25,0.5); }
+    .footer-payments { display: flex; gap: 8px; align-items: center; }
+    .payment-badge {
+      background: #ffffff;
+      border: 1px solid rgba(30,86,48,0.15);
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: rgba(20,45,25,0.55);
+    }
+    @media (max-width: 900px) {
+      .newsletter { grid-template-columns: 1fr; gap: 32px; padding: 40px 28px; }
+      .footer-main { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .footer-main { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img src="00%20-%20Assets/Logo.png" alt="Logo Akademii Okocimskiego" style="height:44px;width:auto;display:block;">
+    </a>
+    <a href="index.html" class="header-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Wróć do sklepu
+    </a>
+  </div>
+</header>
+
+<!-- STEPS BAR -->
+<div class="steps-bar">
+  <div class="steps-inner">
+    <div class="step-item active" id="step-indicator-1">
+      <div class="step-num">1</div>
+      <span class="step-label">Dane dostawy</span>
+    </div>
+    <div class="step-sep"></div>
+    <div class="step-item" id="step-indicator-2">
+      <div class="step-num">2</div>
+      <span class="step-label">Płatność</span>
+    </div>
+    <div class="step-sep"></div>
+    <div class="step-item" id="step-indicator-3">
+      <div class="step-num">3</div>
+      <span class="step-label">Potwierdzenie</span>
+    </div>
+  </div>
+</div>
+
+<!-- EMPTY CART -->
+<div class="empty-cart-screen" id="empty-cart-screen">
+  <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+    <line x1="3" y1="6" x2="21" y2="6"/>
+    <path d="M16 10a4 4 0 0 1-8 0"/>
+  </svg>
+  <h2>Koszyk jest pusty</h2>
+  <p>Dodaj produkty do koszyka, aby przejść do kasy.</p>
+  <a href="index.html" class="btn-back-shop">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Przejdź do sklepu
+  </a>
+</div>
+
+<!-- SUCCESS SCREEN -->
+<div class="success-screen" id="success-screen">
+  <div class="success-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <h1 class="success-title">Zamówienie <span>Złożone!</span></h1>
+  <p class="success-desc">Dziękujemy za zakupy w oficjalnym sklepie Akademii Okocimskiego. Potwierdzenie wysłaliśmy na podany adres e-mail.</p>
+  <div class="success-order">
+    <div class="success-order-row">
+      <span class="success-order-label">Numer zamówienia</span>
+      <span class="success-order-val" id="order-number">#AO-00000</span>
+    </div>
+    <div class="success-order-row">
+      <span class="success-order-label">Szacowana dostawa</span>
+      <span class="success-order-val" id="order-delivery">—</span>
+    </div>
+    <div class="success-order-row">
+      <span class="success-order-label">Suma zamówienia</span>
+      <span class="success-order-val" id="order-total-confirm">—</span>
+    </div>
+  </div>
+  <a href="index.html" class="btn-back-shop">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Wróć do sklepu
+  </a>
+</div>
+
+<!-- CHECKOUT LAYOUT -->
+<div class="checkout-layout" id="checkout-layout">
+
+  <!-- LEFT: FORMS -->
+  <div class="checkout-forms">
+
+    <!-- 1. DANE DOSTAWY -->
+    <div class="card">
+      <div class="card-title">
+        <div class="card-title-num">1</div>
+        Dane do dostawy
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">Imię <span class="req">*</span></label>
+          <input type="text" id="firstName" placeholder="Jan" autocomplete="given-name" />
+          <span class="error-msg">Wpisz imię</span>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Nazwisko <span class="req">*</span></label>
+          <input type="text" id="lastName" placeholder="Kowalski" autocomplete="family-name" />
+          <span class="error-msg">Wpisz nazwisko</span>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-group">
+          <label for="email">Adres e-mail <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="jan@example.com" autocomplete="email" />
+          <span class="error-msg">Wpisz poprawny adres e-mail</span>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-group">
+          <label for="phone">Telefon <span class="req">*</span></label>
+          <input type="tel" id="phone" placeholder="+48 500 000 000" autocomplete="tel" />
+          <span class="error-msg">Wpisz numer telefonu</span>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-group">
+          <label for="address">Ulica i numer <span class="req">*</span></label>
+          <input type="text" id="address" placeholder="ul. Przykładowa 12/3" autocomplete="street-address" />
+          <span class="error-msg">Wpisz adres</span>
+        </div>
+      </div>
+
+      <div class="form-row cols-3">
+        <div class="form-group">
+          <label for="zip">Kod pocztowy <span class="req">*</span></label>
+          <input type="text" id="zip" placeholder="00-000" maxlength="6" autocomplete="postal-code" />
+          <span class="error-msg">Wpisz kod pocztowy</span>
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label for="city">Miasto <span class="req">*</span></label>
+          <input type="text" id="city" placeholder="Warszawa" autocomplete="address-level2" />
+          <span class="error-msg">Wpisz miasto</span>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="country">Kraj</label>
+          <div class="select-wrap">
+            <select id="country" autocomplete="country">
+              <option value="PL" selected>Polska</option>
+              <option value="DE">Niemcy</option>
+              <option value="CZ">Czechy</option>
+              <option value="SK">Słowacja</option>
+              <option value="AT">Austria</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. DOSTAWA -->
+    <div class="card">
+      <div class="card-title">
+        <div class="card-title-num">2</div>
+        Metoda dostawy
+      </div>
+      <div class="delivery-options" id="delivery-options">
+        <label class="delivery-opt selected" data-delivery="inpost" data-price="0" data-days="1-2">
+          <input type="radio" name="delivery" value="inpost" checked />
+          <div class="radio-dot"></div>
+          <div class="delivery-opt-icon">📦</div>
+          <div class="delivery-opt-info">
+            <div class="delivery-opt-name">InPost Paczkomat</div>
+            <div class="delivery-opt-desc">Odbiór w paczkomacie · 1–2 dni robocze</div>
+          </div>
+          <div class="delivery-opt-price free" id="inpost-price">GRATIS</div>
+        </label>
+        <label class="delivery-opt" data-delivery="courier" data-price="15" data-days="1">
+          <input type="radio" name="delivery" value="courier" />
+          <div class="radio-dot"></div>
+          <div class="delivery-opt-icon">🚚</div>
+          <div class="delivery-opt-info">
+            <div class="delivery-opt-name">Kurier DPD</div>
+            <div class="delivery-opt-desc">Dostawa pod drzwi · 1 dzień roboczy</div>
+          </div>
+          <div class="delivery-opt-price" id="courier-price">15 zł</div>
+        </label>
+        <label class="delivery-opt" data-delivery="pickup" data-price="0" data-days="0">
+          <input type="radio" name="delivery" value="pickup" />
+          <div class="radio-dot"></div>
+          <div class="delivery-opt-icon">🏟️</div>
+          <div class="delivery-opt-info">
+            <div class="delivery-opt-name">Odbiór osobisty</div>
+            <div class="delivery-opt-desc">Siedziba Akademii Okocimskiego · Bezpłatnie</div>
+          </div>
+          <div class="delivery-opt-price free">GRATIS</div>
+        </label>
+      </div>
+    </div>
+
+    <!-- 3. PŁATNOŚĆ -->
+    <div class="card">
+      <div class="card-title">
+        <div class="card-title-num">3</div>
+        Płatność
+      </div>
+      <div class="payment-options">
+        <label class="payment-opt selected" data-payment="blik">
+          <input type="radio" name="payment" value="blik" checked />
+          <div class="payment-opt-icon">📱</div>
+          <div class="payment-opt-name">BLIK</div>
+        </label>
+        <label class="payment-opt" data-payment="przelewy24">
+          <input type="radio" name="payment" value="przelewy24" />
+          <div class="payment-opt-icon">🏦</div>
+          <div class="payment-opt-name">Przelewy24</div>
+        </label>
+        <label class="payment-opt" data-payment="card">
+          <input type="radio" name="payment" value="card" />
+          <div class="payment-opt-icon">💳</div>
+          <div class="payment-opt-name">Karta</div>
+        </label>
+        <label class="payment-opt" data-payment="transfer">
+          <input type="radio" name="payment" value="transfer" />
+          <div class="payment-opt-icon">🔄</div>
+          <div class="payment-opt-name">Przelew</div>
+        </label>
+        <label class="payment-opt" data-payment="cash">
+          <input type="radio" name="payment" value="cash" />
+          <div class="payment-opt-icon">💵</div>
+          <div class="payment-opt-name">Przy odbiorze</div>
+        </label>
+        <label class="payment-opt" data-payment="bnpl">
+          <input type="radio" name="payment" value="bnpl" />
+          <div class="payment-opt-icon">📆</div>
+          <div class="payment-opt-name">Kup teraz, zapłać później</div>
+        </label>
+      </div>
+
+      <!-- BLIK input (conditional) -->
+      <div id="blik-field" style="margin-top:16px;">
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="blikCode">Kod BLIK <span class="req">*</span></label>
+          <input type="text" id="blikCode" placeholder="000 000" maxlength="7" inputmode="numeric" />
+          <span class="error-msg">Wpisz 6-cyfrowy kod BLIK</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- UWAGI -->
+    <div class="card">
+      <div class="card-title" style="margin-bottom:14px;">
+        <div class="card-title-num" style="background:rgba(30,86,48,0.15);color:var(--g500);">✎</div>
+        Uwagi do zamówienia
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label for="notes">Opcjonalne uwagi</label>
+        <textarea id="notes" rows="3" placeholder="Np. dzwoń po przyjeździe, kod do bramy..."
+          style="width:100%;padding:12px 14px;border:1.5px solid rgba(30,86,48,0.18);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:15px;color:#1a2e1e;resize:vertical;outline:none;transition:border-color .28s;"></textarea>
+      </div>
+    </div>
+
+  </div><!-- /checkout-forms -->
+
+  <!-- RIGHT: ORDER SUMMARY -->
+  <div>
+    <div class="summary-card">
+      <div class="summary-title">Podsumowanie</div>
+
+      <div class="summary-items" id="summary-items">
+        <!-- rendered by JS -->
+      </div>
+
+      <div class="promo-wrap">
+        <div class="promo-row">
+          <input class="promo-input" id="promo-input" type="text" placeholder="Kod rabatowy" />
+          <button class="promo-btn" id="promo-btn">Użyj</button>
+        </div>
+        <div class="promo-success" id="promo-success">✓ Kod zastosowany — rabat −10%</div>
+      </div>
+
+      <div class="summary-divider"></div>
+
+      <div class="summary-row">
+        <span class="summary-row-label">Produkty</span>
+        <span class="summary-row-val" id="summary-subtotal">0 zł</span>
+      </div>
+      <div class="summary-row" id="discount-row" style="display:none;">
+        <span class="summary-row-label">Rabat</span>
+        <span class="summary-row-val" style="color:#e05252;" id="summary-discount">−0 zł</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-row-label">Dostawa</span>
+        <span class="summary-row-val" id="summary-delivery">Gratis</span>
+      </div>
+
+      <div class="summary-total">
+        <span class="summary-total-label">Do zapłaty</span>
+        <span class="summary-total-val" id="summary-total">0 zł</span>
+      </div>
+
+      <button class="btn-submit" id="submit-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <span id="submit-label">Złóż zamówienie</span>
+        <div class="spinner" id="submit-spinner"></div>
+      </button>
+
+      <p class="secure-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Płatność zabezpieczona SSL
+      </p>
+    </div>
+  </div>
+
+</div><!-- /checkout-layout -->
+
+<!-- NEWSLETTER -->
+<div style="max-width:1200px;margin:80px auto 0;padding:0 32px;">
+<div class="newsletter">
+  <div>
+    <h2 class="nl-title">Bądź<br><span>Pierwszy</span></h2>
+    <p class="nl-desc" style="margin-top:12px;">Zapisz się do newslettera i otrzymuj informacje o nowościach, promocjach i wydarzeniach Akademii Okocimskiego. Dla nowych subskrybentów: <strong style="color:var(--gold)">-10% na pierwsze zamówienie.</strong></p>
+  </div>
+  <div>
+    <p style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Dołącz do społeczności</p>
+    <div class="nl-form" style="margin-bottom:12px;">
+      <input class="nl-input" type="email" placeholder="Twój adres e-mail" />
+      <button class="btn-primary">Zapisz się</button>
+    </div>
+    <p style="font-size:12px;color:var(--muted);">Bez spamu. Możesz się wypisać w dowolnym momencie.</p>
+  </div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <a href="index.html" style="text-decoration:none;">
+        <img src="00%20-%20Assets/Logo.png" alt="Logo Akademii Okocimskiego" style="height:44px;width:auto;display:block;">
+      </a>
+      <p>Oficjalny sklep Akademii Piłkarskiej Okocimskiego. Odzież, gadżety i akcesoria najwyższej jakości dla każdego kibica i zawodnika.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-btn" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Sklep</h4>
+      <ul>
+        <li><a href="kategoria.html?kat=koszulki">Koszulki & Stroje</a></li>
+        <li><a href="kategoria.html?kat=bluzy">Bluzy & Kurtki</a></li>
+        <li><a href="kategoria.html?kat=spodenki">Spodenki & Spodnie</a></li>
+        <li><a href="kategoria.html?kat=czapki">Czapki & Akcesoria</a></li>
+        <li><a href="kategoria.html?kat=torby">Torby & Sprzęt</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Akademia</h4>
+      <ul>
+        <li><a href="#">O Akademii</a></li>
+        <li><a href="#">Sekcje Wiekowe</a></li>
+        <li><a href="#">Terminarz</a></li>
+        <li><a href="#">Wyniki</a></li>
+        <li><a href="#">Kadra trenerska</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Pomoc</h4>
+      <ul>
+        <li><a href="#">Rozmiarówka</a></li>
+        <li><a href="#">Wysyłka & Zwroty</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Kontakt</a></li>
+        <li><a href="#">Regulamin</a></li>
+        <li><a href="#">Polityka prywatności</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Akademia Okocimskiego — Wszelkie prawa zastrzeżone</p>
+    <div class="footer-payments">
+      <span class="payment-badge">VISA</span>
+      <span class="payment-badge">Mastercard</span>
+      <span class="payment-badge">BLIK</span>
+      <span class="payment-badge">Przelewy24</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ─── LOAD CART ─── */
+  const FREE_SHIP = 199;
+  let cart = [];
+  try { cart = JSON.parse(localStorage.getItem('ao_cart')) || []; } catch {}
+
+  const cartSubtotal = () => cart.reduce((s, i) => s + i.price * i.qty, 0);
+
+  /* ─── RENDER SUMMARY ─── */
+  let deliveryCost = 0;
+  let discountPct = 0;
+
+  function renderSummary() {
+    const container = document.getElementById('summary-items');
+    container.innerHTML = '';
+
+    if (cart.length === 0) return;
+
+    cart.forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'summary-item';
+      el.innerHTML = `
+        <div class="summary-item-img">
+          <img src="${item.image}" alt="${item.name}" loading="lazy">
+          <span class="summary-item-qty">${item.qty}</span>
+        </div>
+        <div class="summary-item-info">
+          <div class="summary-item-name">${item.name}</div>
+          ${item.size ? `<div class="summary-item-size">Rozmiar: ${item.size}</div>` : ''}
+        </div>
+        <div class="summary-item-price">${item.price * item.qty} zł</div>`;
+      container.appendChild(el);
+    });
+
+    updateTotals();
+  }
+
+  function updateTotals() {
+    const sub = cartSubtotal();
+    const discount = Math.round(sub * discountPct / 100);
+    const discountedSub = sub - discount;
+
+    // delivery: free if subtotal >= FREE_SHIP or pickup
+    const selectedDelivery = document.querySelector('.delivery-opt.selected');
+    const deliveryData = selectedDelivery ? parseInt(selectedDelivery.dataset.price) : 0;
+    deliveryCost = discountedSub >= FREE_SHIP ? 0 : deliveryData;
+
+    const total = discountedSub + deliveryCost;
+
+    document.getElementById('summary-subtotal').textContent = sub + ' zł';
+    document.getElementById('summary-delivery').textContent = deliveryCost === 0 ? 'Gratis' : deliveryCost + ' zł';
+    document.getElementById('summary-total').textContent = total + ' zł';
+
+    const discRow = document.getElementById('discount-row');
+    if (discount > 0) {
+      discRow.style.display = '';
+      document.getElementById('summary-discount').textContent = '−' + discount + ' zł';
+    } else {
+      discRow.style.display = 'none';
+    }
+
+    // Update InPost free label based on subtotal
+    const inpostEl = document.getElementById('inpost-price');
+    if (inpostEl) inpostEl.textContent = discountedSub >= FREE_SHIP ? 'GRATIS' : '0 zł';
+  }
+
+  /* ─── EMPTY / SHOW ─── */
+  function init() {
+    if (cart.length === 0) {
+      document.getElementById('empty-cart-screen').classList.add('show');
+      document.getElementById('checkout-layout').style.display = 'none';
+      document.querySelector('.steps-bar').style.display = 'none';
+    } else {
+      renderSummary();
+    }
+  }
+
+  init();
+
+  /* ─── DELIVERY SELECTION ─── */
+  document.querySelectorAll('.delivery-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.delivery-opt').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      opt.querySelector('input[type="radio"]').checked = true;
+      updateTotals();
+    });
+  });
+
+  /* ─── PAYMENT SELECTION ─── */
+  document.querySelectorAll('.payment-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.payment-opt').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      opt.querySelector('input[type="radio"]').checked = true;
+      // show/hide BLIK field
+      const blikField = document.getElementById('blik-field');
+      blikField.style.display = opt.dataset.payment === 'blik' ? '' : 'none';
+    });
+  });
+
+  /* ─── ZIP FORMAT ─── */
+  document.getElementById('zip').addEventListener('input', e => {
+    let v = e.target.value.replace(/\D/g, '');
+    if (v.length > 2) v = v.slice(0,2) + '-' + v.slice(2,5);
+    e.target.value = v;
+  });
+
+  /* ─── BLIK FORMAT ─── */
+  document.getElementById('blikCode').addEventListener('input', e => {
+    let v = e.target.value.replace(/\D/g, '').slice(0,6);
+    if (v.length > 3) v = v.slice(0,3) + ' ' + v.slice(3);
+    e.target.value = v;
+  });
+
+  /* ─── PROMO CODE ─── */
+  document.getElementById('promo-btn').addEventListener('click', () => {
+    const code = document.getElementById('promo-input').value.trim().toUpperCase();
+    const validCodes = { 'AKADEMIA10': 10, 'KIBIC10': 10, 'NOWY10': 10 };
+    if (validCodes[code] && discountPct === 0) {
+      discountPct = validCodes[code];
+      document.getElementById('promo-success').style.display = 'block';
+      document.getElementById('promo-input').disabled = true;
+      document.getElementById('promo-btn').disabled = true;
+      updateTotals();
+    } else {
+      document.getElementById('promo-input').style.borderColor = '#e05252';
+      setTimeout(() => document.getElementById('promo-input').style.borderColor = '', 1500);
+    }
+  });
+
+  /* ─── FORM VALIDATION ─── */
+  function validateEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function validateZip(v) { return /^\d{2}-\d{3}$/.test(v); }
+  function validatePhone(v) { return v.replace(/\D/g,'').length >= 9; }
+
+  function validateField(input, checkFn) {
+    const ok = checkFn(input.value.trim());
+    input.classList.toggle('error', !ok);
+    return ok;
+  }
+
+  function validateAll() {
+    const checks = [
+      validateField(document.getElementById('firstName'), v => v.length >= 2),
+      validateField(document.getElementById('lastName'), v => v.length >= 2),
+      validateField(document.getElementById('email'), validateEmail),
+      validateField(document.getElementById('phone'), validatePhone),
+      validateField(document.getElementById('address'), v => v.length >= 5),
+      validateField(document.getElementById('zip'), validateZip),
+      validateField(document.getElementById('city'), v => v.length >= 2),
+    ];
+
+    // BLIK validation
+    const isBlik = document.querySelector('.payment-opt[data-payment="blik"]').classList.contains('selected');
+    if (isBlik) {
+      checks.push(validateField(document.getElementById('blikCode'), v => v.replace(/\D/g,'').length === 6));
+    }
+
+    return checks.every(Boolean);
+  }
+
+  // live validation on blur
+  ['firstName','lastName','address','city'].forEach(id => {
+    document.getElementById(id).addEventListener('blur', e => {
+      validateField(e.target, v => v.length >= 2);
+    });
+  });
+  document.getElementById('email').addEventListener('blur', e => validateField(e.target, validateEmail));
+  document.getElementById('phone').addEventListener('blur', e => validateField(e.target, validatePhone));
+  document.getElementById('zip').addEventListener('blur', e => validateField(e.target, validateZip));
+
+  /* ─── SUBMIT ─── */
+  document.getElementById('submit-btn').addEventListener('click', () => {
+    if (!validateAll()) {
+      // scroll to first error
+      const firstError = document.querySelector('input.error');
+      if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    // simulate order processing
+    const btn = document.getElementById('submit-btn');
+    const label = document.getElementById('submit-label');
+    const spinner = document.getElementById('submit-spinner');
+    btn.disabled = true;
+    label.textContent = 'Przetwarzamy...';
+    spinner.style.display = 'block';
+
+    // step indicators
+    document.getElementById('step-indicator-1').classList.remove('active');
+    document.getElementById('step-indicator-1').classList.add('done');
+    document.getElementById('step-indicator-2').classList.add('active');
+
+    setTimeout(() => {
+      document.getElementById('step-indicator-2').classList.remove('active');
+      document.getElementById('step-indicator-2').classList.add('done');
+      document.getElementById('step-indicator-3').classList.add('active');
+
+      // generate order details
+      const orderNum = '#AO-' + Math.floor(10000 + Math.random() * 90000);
+      const sub = cartSubtotal();
+      const discount = Math.round(sub * discountPct / 100);
+      const total = sub - discount + deliveryCost;
+      const deliveryDays = document.querySelector('.delivery-opt.selected').dataset.days;
+      const deliveryLabel = deliveryDays === '0' ? 'Odbiór osobisty' :
+                            deliveryDays === '1' ? 'Jutro' : 'Za 1–2 dni robocze';
+
+      document.getElementById('order-number').textContent = orderNum;
+      document.getElementById('order-delivery').textContent = deliveryLabel;
+      document.getElementById('order-total-confirm').textContent = total + ' zł';
+
+      // clear cart
+      localStorage.removeItem('ao_cart');
+
+      // show success
+      document.getElementById('checkout-layout').style.display = 'none';
+      document.querySelector('.steps-bar').style.display = 'none';
+      document.getElementById('success-screen').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 2000);
+  });
+</script>
+
+</body>
+</html>
