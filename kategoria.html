@@ -18,7 +18,57 @@
       --transition: 0.28s cubic-bezier(.4,0,.2,1);
     }
     html { scroll-behavior: smooth; }
-    body { background: #f4f7f5; color: #1a2e1e; font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; overflow-x: hidden; }
+    body { background: radial-gradient(ellipse 110% 80% at 50% 50%, #3B8C58 0%, #1E5630 40%, #0F3018 100%) fixed; color: #1a2e1e; font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; overflow-x: hidden; }
+
+    /* ── DARK GREEN THEME OVERRIDES ── */
+
+    /* Breadcrumb — jasny tekst na gradiencie */
+    .breadcrumb { background: rgba(0,0,0,0.18) !important; border-bottom-color: rgba(255,255,255,0.07) !important; }
+    .breadcrumb a { color: rgba(220,240,225,0.55) !important; }
+    .breadcrumb a:hover { color: var(--gold) !important; }
+    .breadcrumb-sep { color: rgba(220,240,225,0.25) !important; }
+    .breadcrumb-current { color: rgba(220,240,225,0.9) !important; }
+
+    /* Toolbar — jasny tekst */
+    .products-count, .sort-label { color: rgba(220,240,225,0.65) !important; }
+    .sort-select { background-color: rgba(255,255,255,0.95) !important; color: #0D3B1F !important; border-color: rgba(255,255,255,0.2) !important; }
+    .view-btn { background: rgba(255,255,255,0.12) !important; border-color: rgba(255,255,255,0.2) !important; }
+    .view-btn svg { color: rgba(220,240,225,0.8) !important; }
+    .view-btn.active { background: rgba(255,255,255,0.95) !important; border-color: var(--gold) !important; }
+    .view-btn.active svg { color: #0D3B1F !important; }
+
+    /* Active filter tags */
+    .active-filter-tag { background: rgba(201,168,76,0.15) !important; border-color: rgba(201,168,76,0.45) !important; color: #F0D68A !important; }
+    .active-filter-tag button { color: #F0D68A !important; }
+
+    /* Filter sidebar — biała karta */
+    .filter-section { background: #ffffff !important; }
+
+    /* Product cards — białe (jak na homepage) */
+    .product-card { background: #ffffff !important; border-color: rgba(255,255,255,0.15) !important; }
+    .product-card:hover { box-shadow: 0 16px 40px rgba(0,0,0,0.25) !important; border-color: rgba(201,168,76,0.4) !important; }
+    .product-name { color: #0D3B1F !important; }
+    .product-meta { color: rgba(20,45,25,0.5) !important; }
+    .size-dot { color: rgba(20,45,25,0.65) !important; border-color: rgba(30,86,48,0.2) !important; }
+    .star.empty { color: rgba(20,45,25,0.2) !important; }
+
+    /* No results */
+    .no-results { color: rgba(220,240,225,0.5) !important; }
+
+    /* Newsletter i footer — białe sekcje */
+    .newsletter-section, .newsletter { background: #ffffff !important; border-color: rgba(30,86,48,0.15) !important; }
+    .nl-title { color: #0D3B1F !important; }
+    .nl-title span { color: #1E5630 !important; }
+    .nl-desc { color: rgba(20,45,25,0.6) !important; }
+    .nl-input { background: #f4f7f5 !important; color: #1a2e1e !important; border-color: rgba(30,86,48,0.2) !important; }
+    footer { background: #ffffff !important; border-top-color: rgba(30,86,48,0.12) !important; }
+    .footer-brand p { color: rgba(20,45,25,0.6) !important; }
+    .footer-col h4 { color: rgba(20,45,25,0.5) !important; }
+    .footer-col a { color: rgba(20,45,25,0.55) !important; }
+    .footer-col a:hover { color: #1E5630 !important; }
+    .footer-bottom p { color: rgba(20,45,25,0.45) !important; }
+    .payment-badge { color: rgba(20,45,25,0.55) !important; border-color: rgba(30,86,48,0.15) !important; background: #f4f7f5 !important; }
+    .social-btn { background: #f4f7f5 !important; border-color: rgba(30,86,48,0.15) !important; color: rgba(20,45,25,0.5) !important; }
 
     /* ── HEADER ── */
     header { background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(30,86,48,0.12); position: sticky; top: 0; z-index: 1000; }

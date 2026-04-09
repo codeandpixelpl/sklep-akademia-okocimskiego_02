@@ -18,7 +18,51 @@
       --text: #0d2212; --muted: rgba(13,34,18,0.45);
       --r: 10px; --transition: 0.2s ease;
     }
-    body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--text); }
+    body { font-family: 'Barlow', sans-serif; background: radial-gradient(ellipse 110% 80% at 50% 50%, #3B8C58 0%, #1E5630 40%, #0F3018 100%) fixed; color: var(--text); }
+
+    /* ── DARK GREEN THEME OVERRIDES ── */
+
+    /* Breadcrumb — jasny tekst */
+    .breadcrumb { color: rgba(220,240,225,0.55) !important; }
+    .breadcrumb a { color: rgba(220,240,225,0.55) !important; }
+    .breadcrumb a:hover { color: var(--gold) !important; }
+    .breadcrumb span { color: rgba(220,240,225,0.9) !important; }
+
+    /* Product page — biały panel */
+    .product-page { background: #ffffff; border-radius: 20px; padding: 40px !important; max-width: 1300px; }
+
+    /* Gallery */
+    .thumb { background: #f0f4f0 !important; }
+    .main-display { background: #f0f4f0 !important; }
+
+    /* Product info — ciemny tekst na białym tle */
+    .product-title { color: #0D3B1F !important; }
+    .product-category { color: #1E5630 !important; }
+    .product-price-big { color: #0D3B1F !important; }
+    .product-desc { color: rgba(13,34,18,0.7) !important; }
+    .size-label { color: #0D3B1F !important; }
+    .size-guide { color: #1E5630 !important; }
+    .size-btn { background: #fff !important; color: #0D3B1F !important; border-color: rgba(30,86,48,0.2) !important; }
+    .size-btn:hover { border-color: var(--g500) !important; color: var(--g500) !important; }
+    .size-btn.selected { background: var(--g500) !important; color: #fff !important; border-color: var(--g500) !important; }
+    .btn-wish { background: #fff !important; }
+    .trust-mini { background: #f4f7f5 !important; }
+    .trust-mini-item { color: #0D3B1F !important; }
+    .trust-mini-item svg { color: #1E5630 !important; }
+
+    /* Newsletter i footer — białe sekcje */
+    .newsletter, section:has(.newsletter) { background: #ffffff !important; }
+    .nl-title { color: #0D3B1F !important; }
+    .nl-desc { color: rgba(20,45,25,0.6) !important; }
+    .nl-input { background: #f4f7f5 !important; color: #1a2e1e !important; border-color: rgba(30,86,48,0.2) !important; }
+    footer { background: #ffffff !important; border-top-color: rgba(30,86,48,0.12) !important; }
+    .footer-brand p { color: rgba(20,45,25,0.6) !important; }
+    .footer-col h4 { color: rgba(20,45,25,0.5) !important; }
+    .footer-col a { color: rgba(20,45,25,0.55) !important; }
+    .footer-col a:hover { color: #1E5630 !important; }
+    .footer-bottom p { color: rgba(20,45,25,0.45) !important; }
+    .payment-badge { color: rgba(20,45,25,0.55) !important; border-color: rgba(30,86,48,0.15) !important; background: #f4f7f5 !important; }
+    .social-btn { background: #f4f7f5 !important; border-color: rgba(30,86,48,0.15) !important; color: rgba(20,45,25,0.5) !important; }
 
     /* ── HEADER ── */
     header { background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
