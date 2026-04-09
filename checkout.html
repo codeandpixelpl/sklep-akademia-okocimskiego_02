@@ -408,10 +408,21 @@
       .payment-options { grid-template-columns: 1fr 1fr; }
       .checkout-layout { padding: 24px 20px 60px; }
     }
+    @media (max-width: 768px) {
+      .header-inner { padding: 0 16px; }
+      .steps-bar { padding: 0 16px; }
+      .step-item { padding: 12px 16px 12px 0; }
+      .checkout-layout { padding: 16px 16px 48px; }
+      .card { padding: 20px; }
+    }
     @media (max-width: 560px) {
-      .header-inner { padding: 0 20px; }
-      .steps-bar { padding: 0 20px; }
+      .header-inner { padding: 0 16px; }
+      .steps-bar { padding: 0 16px; }
       .step-item span.step-label { display: none; }
+      .form-row.cols-3 { grid-template-columns: 1fr; }
+      .payment-options { grid-template-columns: 1fr; }
+      .checkout-layout { padding: 12px 12px 48px; }
+      .card { padding: 16px; }
     }
 
     /* ── NEWSLETTER ── */
@@ -565,9 +576,17 @@
       .newsletter { grid-template-columns: 1fr; gap: 32px; padding: 40px 28px; }
       .footer-main { grid-template-columns: 1fr 1fr; }
     }
+    @media (max-width: 768px) {
+      .newsletter { padding: 32px 20px; margin: 0 0 40px; }
+      .nl-title { font-size: 40px; }
+      .nl-form { flex-direction: column; gap: 10px; }
+      .footer-main { padding: 40px 16px 28px; gap: 28px; }
+      .footer-bottom { padding: 16px; }
+    }
     @media (max-width: 560px) {
       .footer-main { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; text-align: center; }
+      .footer-payments { justify-content: center; }
     }
   </style>
 </head>
